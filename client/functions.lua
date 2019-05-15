@@ -1469,6 +1469,41 @@ RegisterNUICallback('action', function(data, cb)
 				queue = "global"
 			})
 		end
+	elseif type == 'give' then
+		local players      = ESX.Game.GetPlayersInArea(GetEntityCoords(playerPed), 3.0)
+		local foundPlayers = false
+		local foundPlayersTable
+		local foundPlayer
+
+		for i=1, #players, 1 do
+			if players[i] ~= PlayerId() then
+				foundPlayers = true
+
+				table.insert(foundPlayersTable, {
+					label = ('<b>' .. GetPlayerName(players[i]) .. '</b>'),
+					value = players[i]
+				})
+			end
+		end
+
+		if not foundPlayers then
+			exports.pNotify:SendNotification({
+				text = ("<h3><center>NetGaming Menu</center></h3><br><p>Der er <b>INGEN</b> spiller i nærheden</p>"),
+				timeout = 5000,
+				layout = "topRight",
+				type = "error",
+				queue = "global"
+			})
+			return
+		else
+			SendNUIMessage({
+				type = 'inventory',
+				action = 'fetchGivePlayers',
+				players = foundPlayersTable
+			})
+		end
+
+		foundPlayers = false
 	end
 end)
 

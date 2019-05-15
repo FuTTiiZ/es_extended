@@ -107,6 +107,8 @@ $(document).ready(function() {
         $('.inventory').show();
       } else if (data.display === false) {
         $('.inventory').hide();
+      } else if (data.action === 'fetchGivePlayers') {
+
       }
     }
   });
@@ -130,7 +132,7 @@ $('#mainOptions').on('click', 'li.main-option', function() {
 });
 
 let cardUp;
-$('#mainOptions').on('click', 'li.inv-item', function() {
+$('#containerList').on('click', 'li.inv-item', function() {
   setActive(tab, false);
   switch ($(this).attr('category')) {
     case 'personal':
@@ -178,7 +180,7 @@ $('#mainOptions').on('click', 'li.inv-item', function() {
       }
     break;
     default:
-      setTab(`
+      /*setTab(`
         <li class="menu-header noselect">
           <div>
             <h1 id="catName">${$(this).attr('name')}</h1>
@@ -201,8 +203,11 @@ $('#mainOptions').on('click', 'li.inv-item', function() {
         </li>
       `);
       $('#giveItem').bind('click', function() {
-        
+        postAction('give');
       });
+      $('#removeItem').bind('click', function() {
+
+      });*/
     break;
   }
 });
