@@ -145,37 +145,31 @@ $('#containerList').on('click', 'li.inv-item', function() {
           </li>
           <div class="shadow"></div>
           <li>
-            <div id="seeCard" class="large-btn">
-              <p>
-                Se dit sygesikringskort
-              </p>
-            </div>
+            ${!cardUp ? '<div id="seeCard" class="large-btn"><p><b>Se dit sygesikringskort</b></p></div>' : '<div id="seeCard" class="large-btn" style="background-color: red"><p><b>Pak dit sygesikringskort væk</b></p></div>'}
           </li>
           <li>
             <div id="showCard" class="large-btn">
               <p>
-                Vis dit sygesikringskort
+                <b>Vis dit sygesikringskort
               </p>
             </div>
           </li>
         `);
-        if (!cardUp) {
-          $('#seeCard').bind('click', function() {
+        $('#seeCard').bind('click', function() {
+          if (!cardUp) {
             $('#seeCard').css('background-color', 'red');
-            $('#seeCard p').innerHTML = `Pak dit sygesikringskort væk`;
-            sendAction('seeCard', 'show');
+            $('#seeCard p')[0].innerHTML = `<b>Pak dit sygesikringskort væk</b>`;
+            postAction('seeCard', 'show');
             cardUp = true;
-          });
-        } else if (cardUp) {
-          $('#seeCard').bind('click', function() {
+          } else if (cardUp) {
             $('#seeCard').css('background-color', 'green');
-            $('#seeCard p').innerHTML = `Se dit sygesikringskort`;
-            sendAction('seeCard', 'hide');
+            $('#seeCard p')[0].innerHTML = `<b>Se dit sygesikringskort</b>`;
+            postAction('seeCard', 'hide');
             cardUp = false;
-          });
+          }
         }
         $('#showCard').bind('click', function() {
-          sendAction('seeCard');
+          postAction('seeCard');
         });
       }
     break;
