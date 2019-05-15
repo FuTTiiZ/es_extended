@@ -51,7 +51,7 @@ function updateItems(t) {
       switch (item.cat) {
         case 'money':
           $('#containerList')[0].innerHTML += `
-            <li id="${item.value}" name="${item.name}" amount="${item.count}" type="${item.type}" class="inv-item">
+            <li id="${item.value}" name="${item.name}" category="${item.cat}" amount="${item.count}" type="${item.type}" class="inv-item">
               <div>
                 <p>
                   ${item.label} <span class="${item.value === 'black_money' ? 'red-' : ''}price">${formatPrice(item.count)}</span>
@@ -61,7 +61,7 @@ function updateItems(t) {
         break;
         case 'personal':
           $('#containerList')[0].innerHTML += `
-            <li id="${item.value}" name="${item.name}" amount="${item.count}" type="${item.type}" class="inv-item">
+            <li id="${item.value}" name="${item.name}" category="${item.cat}" amount="${item.count}" type="${item.type}" class="inv-item">
               <div>
                 <p>
                   ${item.label}
@@ -71,12 +71,13 @@ function updateItems(t) {
         break;
         default:
           $('#containerList')[0].innerHTML += `
-            <li id="${item.value}" name="${item.name}" amount="${item.count}" type="${item.type}" class="inv-item">
+            <li id="${item.value}" name="${item.name}" category="${item.cat}" amount="${item.count}" type="${item.type}" class="inv-item">
               <div>
                 <p>
                   <b>${formatItem(item.name) + item.label}
               </div>
             </li>`;
+        break;
       }
     }
   }
@@ -119,6 +120,27 @@ $('#mainOptions').on('click', 'li.main-option', function() {
   `);
 
   updateItems(tab);
+});
+
+$('#mainOptions').on('click', 'li.inv-item', function() {
+  setActive(tab, false);
+  switch ($(this).attr('category')) {
+    case 'personal':
+      if ($(this).attr('id') === 'sygesikringskort') {
+        setTab(`
+          <li class="menu-header noselect">
+            <div>
+              <h1 id="catName">${$(this).attr('name')}</h1>
+            </div>
+          </li>
+          <div class="shadow"></div>
+        `);
+      }
+    break;
+    default:
+
+    break;
+  }
 });
 
 // Luk menuen med "ESC" knappen på tasteturet
