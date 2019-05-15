@@ -169,7 +169,7 @@ $('#containerList').on('click', 'li.inv-item', function() {
           }
         });
         $('#showCard').bind('click', function() {
-          postAction('seeCard');
+          postAction('showCard');
         });
       }
     break;
