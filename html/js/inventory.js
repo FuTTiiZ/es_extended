@@ -134,6 +134,20 @@ $('#mainOptions').on('click', 'li.inv-item', function() {
             </div>
           </li>
           <div class="shadow"></div>
+          <li>
+            <div id="seeCard" class="large-btn">
+              <p>
+                Se dit sygesikringskort
+              </p>
+            </div>
+          </li>
+          <li>
+            <div id="showCard" class="large-btn">
+              <p>
+                Vis dit sygesikringskort
+              </p>
+            </div>
+          </li>
         `);
       }
     break;
