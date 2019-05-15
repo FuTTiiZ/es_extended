@@ -167,7 +167,7 @@ $('#containerList').on('click', 'li.inv-item', function() {
             postAction('seeCard', 'hide');
             cardUp = false;
           }
-        }
+        });
         $('#showCard').bind('click', function() {
           postAction('seeCard');
         });
