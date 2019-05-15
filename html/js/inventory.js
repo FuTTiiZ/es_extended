@@ -5,6 +5,13 @@ function closeMenu() {
   $.post('http://es_extended/close', JSON.stringify({}));
 }
 
+function postAction(act, oth) {
+  $.post('http://es_extended/action', JSON.stringify({
+    type: act,
+    other: oth
+  }));
+}
+
 function formatPrice(price, kr) {
   return (!kr ? price.toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + ' kr.' : price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
 }
@@ -122,6 +129,7 @@ $('#mainOptions').on('click', 'li.main-option', function() {
   updateItems(tab);
 });
 
+let cardUp;
 $('#mainOptions').on('click', 'li.inv-item', function() {
   setActive(tab, false);
   switch ($(this).attr('category')) {
@@ -149,10 +157,52 @@ $('#mainOptions').on('click', 'li.inv-item', function() {
             </div>
           </li>
         `);
+        if (!cardUp) {
+          $('#seeCard').bind('click', function() {
+            $('#seeCard').css('background-color', 'red');
+            $('#seeCard p').innerHTML = `Pak dit sygesikringskort væk`;
+            sendAction('seeCard', 'show');
+            cardUp = true;
+          });
+        } else if (cardUp) {
+          $('#seeCard').bind('click', function() {
+            $('#seeCard').css('background-color', 'green');
+            $('#seeCard p').innerHTML = `Se dit sygesikringskort`;
+            sendAction('seeCard', 'hide');
+            cardUp = false;
+          });
+        }
+        $('#showCard').bind('click', function() {
+          sendAction('seeCard');
+        });
       }
     break;
     default:
-
+      setTab(`
+        <li class="menu-header noselect">
+          <div>
+            <h1 id="catName">${$(this).attr('name')}</h1>
+          </div>
+        </li>
+        <div class="shadow"></div>
+        <li>
+          <div id="giveItem" class="large-btn">
+            <p>
+              Giv genstand
+            </p>
+          </div>
+        </li>
+        <li>
+          <div id="removeItem" class="large-btn">
+            <p>
+              Fjern genstand
+            </p>
+          </div>
+        </li>
+      `);
+      $('#giveItem').bind('click', function() {
+        
+      });
     break;
   }
 });
