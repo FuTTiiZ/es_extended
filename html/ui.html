@@ -1,0 +1,52 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="css/app.css" />
+		<link rel="stylesheet" href="css/inventory.css" />
+	</head>
+	<body>
+
+		<div id="hud"></div>
+		<div id="inventory_notifications"></div>
+		<div class="inventory">
+			<div class="x-container"><span class="noselect">x</span></div>
+      <div>
+        <h1 class="noselect"><b>Inventar</b></h1>
+      </div>
+      <ul id="mainOptions">
+        <li class="main-option" id="personal" name="Personlige genstande">
+          <img class="main-option-image noselect" src="https://i.imgur.com/0fOnpZB.png">
+        </li>
+				<li class="main-option" id="money" name="Penge">
+          <img class="main-option-image noselect" src="https://i.imgur.com/LqBZaKC.png">
+        </li>
+				<li class="main-option" id="weapon" name="Våben">
+          <img class="main-option-image noselect" src="https://i.imgur.com/mQW4spO.png">
+        </li>
+				<li class="main-option" id="food" name="Mad og drikkevarer">
+          <img class="main-option-image noselect" src="https://i.imgur.com/2Wdgrae.png">
+        </l>
+				<li class="main-option" id="general" name="Andre genstande">
+          <img class="main-option-image noselect" src="https://i.imgur.com/JxNdetZ.png">
+        </li>
+      </ul>
+      <div class="main-container">
+        <ul id="containerList">
+          <li class="menu-header noselect">
+            <div>
+              <h1 id="catName">Personlige genstande</h1>
+            </div>
+          </li>
+          <div class="shadow"></div>
+        </ul>
+      </div>
+		</div>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			$('.inventory').hide();
+		</script>
+		<script src="js/mustache.min.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/inventory.js"></script>
+	</body>
+</html>
