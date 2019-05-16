@@ -1472,30 +1472,6 @@ RegisterNUICallback('action', function(data, cb)
 		end
 
 	elseif type == 'give' then
-		local players      = ESX.Game.GetPlayersInArea(GetEntityCoords(playerPed), 3.0)
-		local foundPlayers = false
-
-		for i=1, #players, 1 do
-			if players[i] ~= PlayerId() then
-
-				if players[i] == data2.current.value then
-					foundPlayers = true
-					break
-				end
-			end
-		end
-
-		if not foundPlayers then
-			exports.pNotify:SendNotification({
-				text = ('<h3><center>NetGaming Menu</center></h3><br><p>Der er <b style="color: red">ingen</b> spiller i nærheden</p>'),
-				timeout = 5000,
-				layout = "topRight",
-				type = "error",
-				queue = "global"
-			})
-			return
-		end
-
 		if other == 'item_weapon' then
 
 			local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
@@ -1514,9 +1490,9 @@ RegisterNUICallback('action', function(data, cb)
 			end
 
 			if closestPlayer ~= -1 and closestDistance < 3.0 then
-				closeInv()
 				TriggerServerEvent('esx:giveInventoryItem', GetPlayerServerId(closestPlayer), other, item, sourceAmmo)
 				TriggerServerEvent('discordMessageg', item .. ' (' ..quantity..')', GetPlayerName(closestPlayer))
+				closeInv()
 			else
 				exports.pNotify:SendNotification({
 					text = ('<h3><center>NetGaming Menu</center></h3><br><p>Der er <b style="color: red">ingen</b> spiller i nærheden</p>'),
@@ -1584,7 +1560,7 @@ RegisterNUICallback('action', function(data, cb)
 			end
 		end, function(data2, menu2)
 			menu2.close()]]
-		end
+	end
 end)
 
 RegisterNetEvent('esx:serverCallback')

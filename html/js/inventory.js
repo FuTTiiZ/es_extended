@@ -199,6 +199,7 @@ $('#containerList').on('click', 'li.inv-item', function() {
           other: 'item_weapon',
           item: $(this).attr('id')
         });
+        console.log($(this).attr('id'));
       });
       $('#removeWeapon').bind('click', function() {
 
