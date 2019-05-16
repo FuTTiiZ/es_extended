@@ -1585,6 +1585,7 @@ RegisterNUICallback('action', function(data, cb)
 			end
 		end, function(data2, menu2)
 			menu2.close()]]
+		end
 end)
 
 RegisterNetEvent('esx:serverCallback')
