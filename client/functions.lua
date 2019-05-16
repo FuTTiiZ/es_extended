@@ -1254,7 +1254,6 @@ ESX.ShowInventory = function()
 								queue = "global"
 							})
 						end
-
 					else -- type: item_standard
 
 						ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'inventory_item_count_give', {
@@ -1469,42 +1468,121 @@ RegisterNUICallback('action', function(data, cb)
 				queue = "global"
 			})
 		end
+
 	elseif type == 'give' then
 		local players      = ESX.Game.GetPlayersInArea(GetEntityCoords(playerPed), 3.0)
 		local foundPlayers = false
-		local foundPlayersTable
-		local foundPlayer
 
 		for i=1, #players, 1 do
 			if players[i] ~= PlayerId() then
-				foundPlayers = true
 
-				table.insert(foundPlayersTable, {
-					label = ('<b>' .. GetPlayerName(players[i]) .. '</b>'),
-					value = players[i]
-				})
+				if players[i] == data2.current.value then
+					foundPlayers = true
+					break
+				end
 			end
 		end
 
 		if not foundPlayers then
 			exports.pNotify:SendNotification({
-				text = ("<h3><center>NetGaming Menu</center></h3><br><p>Der er <b>INGEN</b> spiller i nærheden</p>"),
+				text = ('<h3><center>NetGaming Menu</center></h3><br><p>Der er <b style="color: red">ingen</b> spiller i nærheden</p>'),
 				timeout = 5000,
 				layout = "topRight",
 				type = "error",
 				queue = "global"
 			})
 			return
-		else
-			SendNUIMessage({
-				type = 'inventory',
-				action = 'fetchGivePlayers',
-				players = foundPlayersTable
-			})
 		end
 
-		foundPlayers = false
-	end
+		if other == 'item_weapon' then
+
+			local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
+			local closestPed = GetPlayerPed(closestPlayer)
+			local sourceAmmo = GetAmmoInPedWeapon(PlayerPedId(), GetHashKey(item))
+
+			if IsPedSittingInAnyVehicle(closestPed) then
+				exports.pNotify:SendNotification({
+					text = ("<h3><center>NetGaming Menu</center></h3><br><p>Denne handling kan ikke gøres i et køretøj!</p>"),
+					timeout = 5000,
+					layout = "topRight",
+					type = "error",
+					queue = "global"
+				})
+				return
+			end
+
+			if closestPlayer ~= -1 and closestDistance < 3.0 then
+				TriggerServerEvent('esx:giveInventoryItem', GetPlayerServerId(closestPlayer), type, item, sourceAmmo)
+				TriggerServerEvent('discordMessageg', item .. ' (' ..quantity..')', GetPlayerName(closestPlayer))
+				menu2.close()
+				menu1.close()
+			else
+				exports.pNotify:SendNotification({
+					text = ('<h3><center>NetGaming Menu</center></h3><br><p>Der er <b style="color: red">ingen</b> spiller i nærheden</p>'),
+					timeout = 5000,
+					layout = "topRight",
+					type = "error",
+					queue = "global"
+				})
+			end
+		end
+		--[[else -- other: item_standard
+
+				ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'inventory_item_count_give', {
+					title = _U('amount')
+				}, function(data3, menu3)
+					local quantity = tonumber(data3.value)
+					local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
+					local closestPed = GetPlayerPed(closestPlayer)
+
+					if IsPedSittingInAnyVehicle(closestPed) then
+						exports.pNotify:SendNotification({
+							text = ("<h3><center>NetGaming Menu</center></h3><br><p>Denne handling kan ikke gøres i et køretøj!</p>"),
+							timeout = 5000,
+							layout = "topRight",
+							type = "error",
+							queue = "global"
+						})
+						return
+					end
+
+					if closestPlayer ~= -1 and closestDistance < 3.0 then
+						if quantity ~= nil then
+							TriggerServerEvent('esx:giveInventoryItem', GetPlayerServerId(closestPlayer), type, item, quantity)
+							TriggerServerEvent('discordMessageg', item .. ' (' ..quantity..')', GetPlayerName(closestPlayer))
+							menu3.close()
+							menu2.close()
+							menu1.close()
+						else
+							exports.pNotify:SendNotification({
+								text = ("<h3><center>NetGaming Menu</center></h3><br><p>Du har indtastet et ugyldigt tal!</p>"),
+								timeout = 5000,
+								layout = "topRight",
+								type = "error",
+								queue = "global"
+							})
+						end
+
+					else
+						exports.pNotify:SendNotification({
+							text = ('<h3><center>NetGaming Menu</center></h3><br><p>Der er <b style="color: red">ingen</b> spiller i nærheden</p>'),
+							timeout = 5000,
+							layout = "topRight",
+							type = "error",
+							queue = "global"
+						})
+
+						menu3.close()
+						menu2.close()
+						menu1.close()
+					end
+
+				end, function(data3, menu3)
+					menu3.close()
+				end)
+			end
+		end, function(data2, menu2)
+			menu2.close()]]
 end)
 
 RegisterNetEvent('esx:serverCallback')

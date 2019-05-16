@@ -173,8 +173,38 @@ $('#containerList').on('click', 'li.inv-item', function() {
         });
       }
     break;
+    case 'weapon':
+      setTab(`
+        <li class="menu-header noselect">
+          <div>
+            <h1 id="catName">${$(this).attr('name')}</h1>
+          </div>
+        </li>
+        <div class="shadow"></div>
+        <li>
+          <div id="giveWeapon" class="large-btn">
+            <p>
+              <b>Giv våben</b>
+            </p>
+          </div>
+        </li>
+        <li>
+          <div id="removeWeapon" class="large-btn">
+            <p>
+              <b>Fjern våben</b>
+            </p>
+          </div>
+        </li>
+      `);
+      $('#giveWeapon').bind('click', function() {
+
+      });
+      $('#removeWeapon').bind('click', function() {
+
+      });
+    break;
     default:
-      /*setTab(`
+      setTab(`
         <li class="menu-header noselect">
           <div>
             <h1 id="catName">${$(this).attr('name')}</h1>
@@ -184,24 +214,24 @@ $('#containerList').on('click', 'li.inv-item', function() {
         <li>
           <div id="giveItem" class="large-btn">
             <p>
-              Giv genstand
+              <b>Giv genstand</b>
             </p>
           </div>
         </li>
         <li>
           <div id="removeItem" class="large-btn">
             <p>
-              Fjern genstand
+              <b>Fjern genstand</b>
             </p>
           </div>
         </li>
       `);
       $('#giveItem').bind('click', function() {
-        postAction('give');
+
       });
       $('#removeItem').bind('click', function() {
 
-      });*/
+      });
     break;
   }
 });
