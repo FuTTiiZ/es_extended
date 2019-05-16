@@ -197,7 +197,7 @@ $('#containerList').on('click', 'li.inv-item', function() {
         postAction({
           type: 'give',
           other: 'item_weapon',
-          
+          item: $(this).attr('id')
         });
       });
       $('#removeWeapon').bind('click', function() {
