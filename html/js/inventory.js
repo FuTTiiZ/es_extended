@@ -171,6 +171,7 @@ $('#containerList').on('click', 'li.inv-item', function() {
       }
     break;
     case 'weapon':
+    let itemName = $(this).attr('id');
       setTab(`
         <li class="menu-header noselect">
           <div>
@@ -197,9 +198,8 @@ $('#containerList').on('click', 'li.inv-item', function() {
         postAction({
           type: 'give',
           other: 'item_weapon',
-          item: $(this).attr('id')
+          item: itemName
         });
-        console.log($(this).attr('id'));
       });
       $('#removeWeapon').bind('click', function() {
 
