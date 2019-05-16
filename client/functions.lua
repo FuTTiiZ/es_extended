@@ -1514,10 +1514,9 @@ RegisterNUICallback('action', function(data, cb)
 			end
 
 			if closestPlayer ~= -1 and closestDistance < 3.0 then
+				closeInv()
 				TriggerServerEvent('esx:giveInventoryItem', GetPlayerServerId(closestPlayer), other, item, sourceAmmo)
 				TriggerServerEvent('discordMessageg', item .. ' (' ..quantity..')', GetPlayerName(closestPlayer))
-				menu2.close()
-				menu1.close()
 			else
 				exports.pNotify:SendNotification({
 					text = ('<h3><center>NetGaming Menu</center></h3><br><p>Der er <b style="color: red">ingen</b> spiller i nærheden</p>'),
