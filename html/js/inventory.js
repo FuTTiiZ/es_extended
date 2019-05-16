@@ -5,11 +5,8 @@ function closeMenu() {
   $.post('http://es_extended/close', JSON.stringify({}));
 }
 
-function postAction(act, oth) {
-  $.post('http://es_extended/action', JSON.stringify({
-    type: act,
-    other: oth
-  }));
+function postAction(obj) {
+  $.post('http://es_extended/action', JSON.stringify(obj));
 }
 
 function formatPrice(price, kr) {
@@ -159,17 +156,17 @@ $('#containerList').on('click', 'li.inv-item', function() {
           if (!cardUp) {
             $('#seeCard').css('background-color', 'red');
             $('#seeCard p')[0].innerHTML = `<b>Pak dit sygesikringskort væk</b>`;
-            postAction('seeCard', 'show');
+            postAction({type: 'seeCard', other: 'show'});
             cardUp = true;
           } else if (cardUp) {
             $('#seeCard').css('background-color', 'green');
             $('#seeCard p')[0].innerHTML = `<b>Se dit sygesikringskort</b>`;
-            postAction('seeCard', 'hide');
+            postAction({type: 'seeCard', other: 'hide'});
             cardUp = false;
           }
         });
         $('#showCard').bind('click', function() {
-          postAction('showCard');
+          postAction({type: 'showCard'});
         });
       }
     break;

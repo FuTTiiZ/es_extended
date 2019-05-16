@@ -1452,6 +1452,8 @@ end
 RegisterNUICallback('action', function(data, cb)
 	local type = data.type
 	local other = data.other
+	local item = data.item
+
 	if type == 'seeCard' then
 		TriggerServerEvent('identitycardd:' .. other, GetPlayerServerId(PlayerId()), GetPlayerServerId(PlayerId()))
 
@@ -1512,7 +1514,7 @@ RegisterNUICallback('action', function(data, cb)
 			end
 
 			if closestPlayer ~= -1 and closestDistance < 3.0 then
-				TriggerServerEvent('esx:giveInventoryItem', GetPlayerServerId(closestPlayer), type, item, sourceAmmo)
+				TriggerServerEvent('esx:giveInventoryItem', GetPlayerServerId(closestPlayer), other, item, sourceAmmo)
 				TriggerServerEvent('discordMessageg', item .. ' (' ..quantity..')', GetPlayerName(closestPlayer))
 				menu2.close()
 				menu1.close()
