@@ -214,7 +214,7 @@ $('#containerList').on('click', 'li.inv-item', function() {
         </li>
       `);
       $('#giveAmmo').bind('click', function() {
-        let ammoAmount = $('#giveAmmo').value;
+        let ammoAmount = $('#ammoAmount').value;
         postAction({
           type: 'giveammo',
           other: ammoAmount,

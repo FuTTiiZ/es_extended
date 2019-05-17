@@ -1561,10 +1561,9 @@ RegisterNUICallback('action', function(data, cb)
 		end, function(data2, menu2)
 			menu2.close()]]
 	elseif type == 'giveammo' then
-		print('123')
 		local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
 		local closestPed = GetPlayerPed(closestPlayer)
-		local pedAmmo = GetAmmoInPedWeapon(playerPed, GetHashKey(item))
+		local pedAmmo = GetAmmoInPedWeapon(PlayerPedId(), GetHashKey(item))
 
 		if IsPedSittingInAnyVehicle(closestPed) then
 			exports.pNotify:SendNotification({
@@ -1585,7 +1584,7 @@ RegisterNUICallback('action', function(data, cb)
 					if quantity <= pedAmmo and quantity >= 0 then
 
 						local finalAmmoSource = math.floor(pedAmmo - quantity)
-						SetPedAmmo(playerPed, item, finalAmmoSource)
+						SetPedAmmo(PlayerPedId(), item, finalAmmoSource)
 						AddAmmoToPed(closestPed, item, quantity)
 
 						exports.pNotify:SendNotification({
