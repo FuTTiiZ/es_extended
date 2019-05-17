@@ -243,3 +243,14 @@ span.red-price {
 span.amount {
   color: #d3a200;
 }
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.ammo-amount {
+  text-align: center;
+  background: none;
+}

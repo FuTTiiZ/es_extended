@@ -73,6 +73,15 @@ function updateItems(t) {
               </div>
             </li>`;
         break;
+        case 'weapon':
+          $('#containerList')[0].innerHTML += `
+            <li id="${item.value}" name="${item.name}" category="${item.cat}" ammo="${item.ammo}" amount="${item.count}" type="${item.type}" class="inv-item">
+              <div>
+                <p>
+                  <b>${formatItem(item.name) + item.label}
+              </div>
+            </li>`;
+        break;
         default:
           $('#containerList')[0].innerHTML += `
             <li id="${item.value}" name="${item.name}" category="${item.cat}" amount="${item.count}" type="${item.type}" class="inv-item">
@@ -180,6 +189,14 @@ $('#containerList').on('click', 'li.inv-item', function() {
         </li>
         <div class="shadow"></div>
         <li>
+          <div id="giveAmmo" class="large-btn">
+            <p>
+              <b>Giv ammunition</b>
+            </p>
+          </div>
+          <input class="ammo-amount" type="number" min="${parseInt($(this).attr('ammo')) - (parseInt($(this).attr('ammo')) - 1)}" max="${$(this).attr('ammo')}">
+        </li>
+        <li>
           <div id="giveWeapon" class="large-btn">
             <p>
               <b>Giv våben</b>
@@ -194,6 +211,13 @@ $('#containerList').on('click', 'li.inv-item', function() {
           </div>
         </li>
       `);
+      $('#giveAmmo').bind('click', function() {
+        postAction({
+          type: 'giveammo',
+          other: ammoAmount,
+          item: itemName
+        });
+      });
       $('#giveWeapon').bind('click', function() {
         postAction({
           type: 'give',
@@ -240,7 +264,7 @@ $('#containerList').on('click', 'li.inv-item', function() {
 
 // Luk menuen med "ESC" knappen på tasteturet
 $(document).keyup(function (data) {
-  if (data.which == 27 || data.which == 8 || data.which == 113) {
+  if (data.which == 27 || data.which == 113) {
     closeMenu();
   }
 });

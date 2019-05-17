@@ -1560,6 +1560,60 @@ RegisterNUICallback('action', function(data, cb)
 			end
 		end, function(data2, menu2)
 			menu2.close()]]
+	elseif type == 'giveammo' then
+		local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
+		local closestPed = GetPlayerPed(closestPlayer)
+		local pedAmmo = GetAmmoInPedWeapon(playerPed, GetHashKey(item))
+
+		if IsPedSittingInAnyVehicle(closestPed) then
+			exports.pNotify:SendNotification({
+				text = ("<h3><center>NetGaming Menu</center></h3><br><p>Denne handling kan ikke gøres i et køretøj!</p>"),
+				timeout = 5000,
+				layout = "topRight",
+				type = "error",
+				queue = "global"
+			})
+			return
+		end
+
+		if closestPlayer ~= -1 and closestDistance < 3.0 then
+			if pedAmmo > 0 then
+				local quantity = tonumber(other)
+
+				if quantity ~= nil then
+					if quantity <= pedAmmo and quantity >= 0 then
+
+						local finalAmmoSource = math.floor(pedAmmo - quantity)
+						SetPedAmmo(playerPed, item, finalAmmoSource)
+						AddAmmoToPed(closestPed, item, quantity)
+
+						exports.pNotify:SendNotification({
+							text = ("<h3><center>NetGaming Menu</center></h3><br><p>Du har givet "..quantity.." skud til "..GetPlayerName(closestPlayer).."!</p>"),
+							timeout = 5000,
+							layout = "topRight",
+							type = "info",
+							queue = "global"
+						})
+					else
+						exports.pNotify:SendNotification({
+							text = ('<h3><center>NetGaming Menu</center></h3><br><p>Du har <b style="color: red">intet</b> ammunition til dette våben!</p>'),
+							timeout = 5000,
+							layout = "topRight",
+							type = "error",
+							queue = "global"
+						})
+					end
+				else
+					exports.pNotify:SendNotification({
+						text = ("<h3><center>NetGaming Menu</center></h3><br><p>Du har indtastet et ugyldigt tal!</p>"),
+						timeout = 5000,
+						layout = "topRight",
+						type = "error",
+						queue = "global"
+					})
+				end
+			end
+		end
 	end
 end)
 
