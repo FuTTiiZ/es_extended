@@ -1578,7 +1578,7 @@ RegisterNUICallback('action', function(data, cb)
 
 		if closestPlayer ~= -1 and closestDistance < 3.0 then
 			if pedAmmo > 0 then
-				local quantity = tonumber(other)
+				local quantity = other
 
 				if quantity ~= nil then
 					if quantity <= pedAmmo and quantity >= 0 then

@@ -214,10 +214,10 @@ $('#containerList').on('click', 'li.inv-item', function() {
         </li>
       `);
       $('#giveAmmo').bind('click', function() {
-        let ammoAmount = $('#ammoAmount').value;
+        $('#ammoAmount').value = 0;
         postAction({
           type: 'giveammo',
-          other: ammoAmount,
+          other: parseInt($('#ammoAmount').value),
           item: itemName
         });
       });
