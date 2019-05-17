@@ -194,7 +194,9 @@ $('#containerList').on('click', 'li.inv-item', function() {
               <b>Giv ammunition</b>
             </p>
           </div>
-          <input class="ammo-amount" type="number" min="${parseInt($(this).attr('ammo')) - (parseInt($(this).attr('ammo')) - 1)}" max="${$(this).attr('ammo')}">
+          <div style="text-align: center">
+            <input id="ammoAmount" class="ammo-amount" type="number" value="0" min="${parseInt($(this).attr('ammo')) - (parseInt($(this).attr('ammo')) - 1)}" max="${$(this).attr('ammo')}">
+          </div>
         </li>
         <li>
           <div id="giveWeapon" class="large-btn">
@@ -212,6 +214,7 @@ $('#containerList').on('click', 'li.inv-item', function() {
         </li>
       `);
       $('#giveAmmo').bind('click', function() {
+        let ammoAmount = $('#giveAmmo').value;
         postAction({
           type: 'giveammo',
           other: ammoAmount,

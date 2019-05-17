@@ -1561,6 +1561,7 @@ RegisterNUICallback('action', function(data, cb)
 		end, function(data2, menu2)
 			menu2.close()]]
 	elseif type == 'giveammo' then
+		print('123')
 		local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
 		local closestPed = GetPlayerPed(closestPlayer)
 		local pedAmmo = GetAmmoInPedWeapon(playerPed, GetHashKey(item))
