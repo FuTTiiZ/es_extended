@@ -1565,6 +1565,11 @@ RegisterNUICallback('action', function(data, cb)
 		local closestPed = GetPlayerPed(closestPlayer)
 		local pedAmmo = GetAmmoInPedWeapon(PlayerPedId(), GetHashKey(item))
 
+		print(type(PlayerPedId()))
+		print('----------------')
+		print(type(closestPed))
+		print(GetHashKey(item))
+
 		if IsPedSittingInAnyVehicle(closestPed) then
 			exports.pNotify:SendNotification({
 				text = ("<h3><center>NetGaming Menu</center></h3><br><p>Denne handling kan ikke gøres i et køretøj!</p>"),
@@ -1580,7 +1585,7 @@ RegisterNUICallback('action', function(data, cb)
 			if pedAmmo > 0 then
 				local quantity = other
 
-				if quantity ~= nil then
+				if quantity ~= nil or quantity ~= 0 then
 					if quantity <= pedAmmo and quantity >= 0 then
 
 						local finalAmmoSource = math.floor(pedAmmo - quantity)
@@ -1588,7 +1593,7 @@ RegisterNUICallback('action', function(data, cb)
 						AddAmmoToPed(closestPed, item, quantity)
 
 						exports.pNotify:SendNotification({
-							text = ("<h3><center>NetGaming Menu</center></h3><br><p>Du har givet "..quantity.." skud til "..GetPlayerName(closestPlayer).."!</p>"),
+							text = ('<h3><center>NetGaming Menu</center></h3><br><p>Du har givet <span style="color: #d3a200">' .. quantity .. ' skud</span> til '..GetPlayerName(closestPlayer)..'!</p>'),
 							timeout = 5000,
 							layout = "topRight",
 							type = "info",
@@ -1605,7 +1610,7 @@ RegisterNUICallback('action', function(data, cb)
 					end
 				else
 					exports.pNotify:SendNotification({
-						text = ("<h3><center>NetGaming Menu</center></h3><br><p>Du har indtastet et ugyldigt tal!</p>"),
+						text = ("<h3><center>NetGaming Menu</center></h3><br><p>Du har indtastet et ugyldigt antal!</p>"),
 						timeout = 5000,
 						layout = "topRight",
 						type = "error",

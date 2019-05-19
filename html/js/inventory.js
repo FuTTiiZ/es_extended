@@ -214,12 +214,12 @@ $('#containerList').on('click', 'li.inv-item', function() {
         </li>
       `);
       $('#giveAmmo').bind('click', function() {
-        $('#ammoAmount').value = 0;
         postAction({
           type: 'giveammo',
-          other: parseInt($('#ammoAmount').value),
-          item: itemName
+          other: parseInt($('#ammoAmount').val()),
+          item: itemName.toLowerCase()
         });
+        $('#ammoAmount').val(0);
       });
       $('#giveWeapon').bind('click', function() {
         postAction({
